@@ -1,5 +1,7 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 # bin/compile BUILD_DIR CACHE_DIR
+
+set -e
 
 indent() {
     sed -u 's/^/       /'

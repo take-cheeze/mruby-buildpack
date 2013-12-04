@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 # bin/detect BUILD_DIR
 
 if [ -f $1/build_config.rb ] ; then
