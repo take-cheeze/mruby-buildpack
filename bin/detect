@@ -4,6 +4,6 @@
 if [ -f $1/build_config.rb ] ; then
     echo "mruby"
     exit 0
+else
+    exit 1
 fi
-echo "no"
-exit 1
