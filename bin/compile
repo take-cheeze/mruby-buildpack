@@ -1,0 +1,38 @@
+#!/usr/bin/env bash -e
+# bin/compile BUILD_DIR CACHE_DIR
+
+indent() {
+    sed -u 's/^/       /'
+}
+
+SCRIPT_PATH=$1
+cd $SCRIPT_PATH
+
+export LIBUV_VERSION=0.10.19
+
+echo '-----> building libuv'
+wget http://libuv.org/dist/v0.10.19/libuv-v$LIBUV_VERSION.tar.gz | indent
+tar xf libuv-v$LIBUV_VERSION.tar.gz
+cd libuv-v$LIBUV_VERSION
+make libuv.a | indent
+cd $SCRIPT_PATH
+echo '-----> libuv build done'
+
+if [ -f "$SCRIPT_PATH/build_config.rb" ] ; then
+    echo '-----> build_config.rb found'
+else
+    echo '-----> no build_config.rb found. cannot build mruby'
+fi
+
+echo '-----> cloning mruby'
+git clone --depth 1 "https://github.com/mruby/mruby.git" | indent
+echo '-----> mruby clone done'
+
+echo '-----> building mruby'
+LDFLAGS="-L$SCRIPT_PATH/libuv-v$LIBUV_VERSION" \
+    CFLAGS="-I$SCRIPT_PATH/libuv-v$LIBUV_VERSION/include" \
+    MRUBY_CONFIG="$SCRIPT_PATH/build_config.rb" \
+    make -C "$SCRIPT_PATH/mruby" $@ | indent
+echo '-----> mruby build done'
+
+echo '-----> Compilation done'

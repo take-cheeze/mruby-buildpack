@@ -1,0 +1,8 @@
+#1/usr/bin/env bash -e
+# bin/release BUILD_DIR
+
+cat <<EOF
+---
+default_process_types:
+  web: $1/mruby/bin/mruby server.js
+EOF

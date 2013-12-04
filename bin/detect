@@ -1,0 +1,9 @@
+#!/usr/bin/env bash -e
+# bin/detect BUILD_DIR
+
+if [ -f $1/build_config.rb ] ; then
+    echo "mruby"
+    exit 0
+fi
+echo "no"
+exit 1
