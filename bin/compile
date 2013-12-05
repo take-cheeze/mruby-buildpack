@@ -38,4 +38,7 @@ LDFLAGS="-L$SCRIPT_PATH/libuv-v$LIBUV_VERSION" \
 chmod +x $SCRIPT_PATH/mruby/bin/mruby
 echo '-----> mruby build done'
 
+mkdir -p $1/.profile.d
+echo 'export PATH="$HOME/mruby/bin:$PATH"' > $1/.profile.d/mruby.sh
+
 echo '-----> Compilation done'
